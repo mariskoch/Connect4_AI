@@ -4,6 +4,9 @@ import board.Board;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestGameFinish {
 
     @Test
@@ -104,5 +107,19 @@ public class TestGameFinish {
         if (debug) e.printBoard();
 
         Assertions.assertFalse(a.isGameFinished() || b.isGameFinished() || c.isGameFinished() || d.isGameFinished() || e.isGameFinished());
+    }
+
+    @Test
+    public void testGameFinish_Horizontal() {
+        boolean debug = false;
+        List<Board> boards = new ArrayList<>();
+
+        boards.add(new Board(new int[]{1,1,2,2,3,3,4}));
+        boards.add(new Board(new int[]{7,1,1,2,2,3,3,4}));
+        boards.add(new Board(new int[]{1,2,3,4,1,2,3,4,1,2,3,4,2,3,4,1,1,2,3,4,1,7,2,7,3,7,4}));
+        boards.add(new Board(new int[]{4,5,6,7,4,5,6,7,5,6,7,4,1,2,3,1,1,2,4,1,5,4,4,5,6,2,7}));
+
+        if (debug) boards.forEach(Board::printBoard);
+        boards.forEach(board -> Assertions.assertTrue(board.isGameFinished()));
     }
 }

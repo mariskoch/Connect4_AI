@@ -22,6 +22,12 @@ public class Board {
         }
     }
 
+    public Board(int[] inputs) {
+        for (int num : inputs) {
+            addPiece(num);
+        }
+    }
+
     public void printBoard() {
         for (int i = 0; i < ROWS; i++) {
             System.out.print("|| ");
@@ -41,7 +47,6 @@ public class Board {
         if (i == 0) return false;
         else board[i - 1][colToAdd - 1] = new Piece(currentPlayer == 1 ? Color.YELLOW : Color.RED);
         currentPlayer = currentPlayer == 1 ? 2 : 1;
-        if (isGameFinished()) System.out.println("The game is finished.");
         return true;
     }
 
@@ -54,7 +59,6 @@ public class Board {
                     if (board[i][j+k] == null) break;
                     if (board[i][j + k].getColor() == c) {
                         if (k == 3) {
-                            System.out.println("The game is finished. Winner: " + (c == Color.YELLOW ? "Player 1" : "Player 2"));
                             return true;
                         }
                     } else {
