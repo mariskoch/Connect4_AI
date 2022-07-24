@@ -2,17 +2,8 @@ import board.Board;
 
 public class Main {
     public static void main(String[] args) {
-        Board boardGame = new Board();
-        boardGame.printBoard();
-        boardGame.addPiece(1);
-        boardGame.addPiece(1);
-        boardGame.addPiece(2);
-        boardGame.addPiece(2);
-        boardGame.addPiece(3);
-        boardGame.addPiece(3);
-        boardGame.addPiece(4);
-        boardGame.addPiece(4);
-        boardGame.printBoard();
+        Board boardGame = new Board(new int[]{1,2,2,3,3,4,3,4,4,6,4});
+        boardGame.isGameFinished();
 
     }
 }

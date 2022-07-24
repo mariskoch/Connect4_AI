@@ -62,8 +62,7 @@ public class Board {
                 if (board[i][j] == null) continue;
                 Color c = board[i][j].getColor();
                 for (int k = 1; k < 4; k++) {
-                    if (board[i][j+k] == null) break;
-                    if (board[i][j + k].getColor() == c) {
+                    if (board[i][j + k] != null && board[i][j + k].getColor() == c) {
                         if (k == 3) {
                             return true;
                         }
@@ -76,8 +75,8 @@ public class Board {
 
         //vertical checks
         for (int i = 0; i < COLUMNS; i++) {
-            for (int j = ROWS-1; j >= 3; j--) {
-                if (board[j][i] == null) break;
+            for (int j = ROWS - 1; j >= 3; j--) {
+                if (board[j][i] == null) continue;
                 Color c = board[j][i].getColor();
                 for (int k = 1; k < 4; k++) {
                     if (board[j - k][i] != null && board[j - k][i].getColor() == c) {
@@ -90,6 +89,42 @@ public class Board {
                 }
             }
         }
+
+        //diagonal checks
+        for (int i = ROWS - 1; i >= 3; i--) {
+            //diagonal checks - right
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] == null) continue;
+                Color c = board[i][j].getColor();
+                for (int k = 1; k < 4; k++) {
+                    if (board[i - k][j + k] != null && board[i - k][j + k].getColor() == c) {
+                        if (k == 3) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+
+                }
+            }
+
+            //diagonal checks - left
+            for (int l = 3; l < COLUMNS; l++) {
+                if (board[i][l] == null) continue;
+                Color c = board[i][l].getColor();
+                for (int k = 1; k < 4; k++) {
+                    if (board[i - k][l - k] != null && board[i - k][l - k].getColor() == c) {
+                        if (k == 3) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+
+                }
+            }
+        }
+
         return false;
     }
 }
