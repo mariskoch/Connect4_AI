@@ -23,6 +23,11 @@ public class Board {
     }
 
     public Board(int[] inputs) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                board[i][j] = null;
+            }
+        }
         for (int num : inputs) {
             addPiece(num);
         }
@@ -51,6 +56,7 @@ public class Board {
     }
 
     public boolean isGameFinished() {
+        //horizontal checks
         for (int i = ROWS - 1; i >= 0; i--) {
             for (int j = 0; j < COLUMNS - 3; j++) {
                 if (board[i][j] == null) continue;
@@ -58,6 +64,23 @@ public class Board {
                 for (int k = 1; k < 4; k++) {
                     if (board[i][j+k] == null) break;
                     if (board[i][j + k].getColor() == c) {
+                        if (k == 3) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        //vertical checks
+        for (int i = 0; i < COLUMNS; i++) {
+            for (int j = ROWS-1; j >= 3; j--) {
+                if (board[j][i] == null) break;
+                Color c = board[j][i].getColor();
+                for (int k = 1; k < 4; k++) {
+                    if (board[j - k][i] != null && board[j - k][i].getColor() == c) {
                         if (k == 3) {
                             return true;
                         }
