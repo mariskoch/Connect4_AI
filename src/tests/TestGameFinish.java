@@ -11,7 +11,6 @@ public class TestGameFinish {
 
     @Test
     public void testGameFinish_Empty() {
-        //should return false
         Board b = new Board();
         Assertions.assertFalse(b.isGameFinished());
     }
@@ -20,93 +19,15 @@ public class TestGameFinish {
     public void testGameFinish_ScatteredPieces() {
         boolean debug = false;
 
-        //all the cases in here should return false
-        //following: horizontal and vertical cases
-        Board a = new Board();
-        a.addPiece(1);
-        a.addPiece(2);
-        a.addPiece(3);
-        a.addPiece(4);
-        a.addPiece(5);
-        a.addPiece(6);
-        a.addPiece(7);
-        if (debug) a.printBoard();
+        List<Board> boards = new ArrayList<>();
+        boards.add(new Board(new int[]{1,2,3,4,5,6,7}));
+        boards.add(new Board(new int[]{1,2,3,4,5,6,1,2,3,4,5,6,1,2,3,4,5,6,2,3,4,5,6,7,2,3,4,5,6,7,2,3,4,5,6,7}));
+        boards.add(new Board(new int[]{1,1,2,2,3,3,1,4,2,5,3,6,7}));
+        boards.add(new Board(new int[]{1,2,1,2,1,2,5,3,5,3,5,3,6,4,6,4,6,4,2,1,3,5,4,6}));
+        boards.add(new Board(new int[]{1,2,2,3,3,4,3,4,5,5,3,5,5,6,5,4}));
 
-        Board b = new Board();
-        for(int j = 0; j < 2; j++) {
-            for (int k = 0; k < 3; k++) {
-                for (int i = 0; i < 3; i++) {
-                    b.addPiece(1 + 2*k + j);
-                    b.addPiece(2 + 2*k + j);
-                }
-            }
-        }
-        if (debug) b.printBoard();
-
-        Board c = new Board();
-        c.addPiece(1);
-        c.addPiece(1);
-        c.addPiece(2);
-        c.addPiece(2);
-        c.addPiece(3);
-        c.addPiece(3);
-        c.addPiece(1);
-        c.addPiece(4);
-        c.addPiece(2);
-        c.addPiece(5);
-        c.addPiece(3);
-        c.addPiece(6);
-        c.addPiece(7);
-        if (debug) c.printBoard();
-
-        Board d = new Board();
-        d.addPiece(1);
-        d.addPiece(2);
-        d.addPiece(1);
-        d.addPiece(2);
-        d.addPiece(1);
-        d.addPiece(2);
-        d.addPiece(5);
-        d.addPiece(3);
-        d.addPiece(5);
-        d.addPiece(3);
-        d.addPiece(5);
-        d.addPiece(3);
-        d.addPiece(6);
-        d.addPiece(4);
-        d.addPiece(6);
-        d.addPiece(4);
-        d.addPiece(6);
-        d.addPiece(4);
-        d.addPiece(2);
-        d.addPiece(1);
-        d.addPiece(3);
-        d.addPiece(5);
-        d.addPiece(4);
-        d.addPiece(6);
-        if (debug) d.printBoard();
-
-        //following: diagonal cases
-        Board e = new Board();
-        e.addPiece(1);
-        e.addPiece(2);
-        e.addPiece(2);
-        e.addPiece(3);
-        e.addPiece(3);
-        e.addPiece(4);
-        e.addPiece(3);
-        e.addPiece(4);
-        e.addPiece(5);
-        e.addPiece(5);
-        e.addPiece(3);
-        e.addPiece(5);
-        e.addPiece(5);
-        e.addPiece(6);
-        e.addPiece(5);
-        e.addPiece(4);
-        if (debug) e.printBoard();
-
-        Assertions.assertFalse(a.isGameFinished() || b.isGameFinished() || c.isGameFinished() || d.isGameFinished() || e.isGameFinished());
+        if (debug) boards.forEach(Board::printBoard);
+        boards.forEach(board -> Assertions.assertFalse(board.isGameFinished()));
     }
 
     @Test
@@ -118,6 +39,30 @@ public class TestGameFinish {
         boards.add(new Board(new int[]{7,1,1,2,2,3,3,4}));
         boards.add(new Board(new int[]{1,2,3,4,1,2,3,4,1,2,3,4,2,3,4,1,1,2,3,4,1,7,2,7,3,7,4}));
         boards.add(new Board(new int[]{4,5,6,7,4,5,6,7,5,6,7,4,1,2,3,1,1,2,4,1,5,4,4,5,6,2,7}));
+
+        if (debug) boards.forEach(Board::printBoard);
+        boards.forEach(board -> Assertions.assertTrue(board.isGameFinished()));
+    }
+
+    @Test
+    public void testGameFinish_Vertical() {
+        boolean debug = false;
+        List<Board> boards = new ArrayList<>();
+
+        boards.add(new Board(new int[]{1,2,1,2,1,2,1}));
+        boards.add(new Board(new int[]{7,6,7,6,5,7,1,7,1,7,1,7}));
+
+        if (debug) boards.forEach(Board::printBoard);
+        boards.forEach(board -> Assertions.assertTrue(board.isGameFinished()));
+    }
+
+    @Test
+    public void testGameFinish_Diagonal() {
+        boolean debug = false;
+        List<Board> boards = new ArrayList<>();
+
+        boards.add(new Board(new int[]{1,2,2,3,3,4,3,4,4,6,4}));
+        boards.add(new Board(new int[]{1,1,1,1,1,1,2,2,2,2,3,2,3,3,7,3,7,7,6,6,7,6,7,4,4,4}));
 
         if (debug) boards.forEach(Board::printBoard);
         boards.forEach(board -> Assertions.assertTrue(board.isGameFinished()));
